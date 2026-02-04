@@ -1,5 +1,6 @@
 # hyrox-531-app
 
+
 Mobile-friendly HYROX + 5/3/1 dashboard. Zero server. Deploys on GitHub Pages.
 
 ## Deploy (no local install)
