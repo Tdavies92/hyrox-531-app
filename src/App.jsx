@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
-// IronPath 5/3/1 — v8.1 (CSV removed; ASCII-only)
+// IronPath 5/3/1 — v8.2 (CSV removed; JSX & styles fixed)
 // - 4-day split
 // - Cycle + Week selectors
 // - Local log with remove/export (JSON only); est 1RM (Epley)
@@ -35,15 +35,20 @@ function epley1RM(load, reps) {
   return w * (1 + r/30)
 }
 
+/* ---------- Mobile-friendly numeric StepInput ---------- */
 function StepInput({ label, units, value, setValue, step=1, min=0, max }) {
   const toNum = (x) => (Number.isFinite(Number(x)) ? Number(x) : 0)
   const clamp = (n) => Math.max(min ?? -Infinity, Math.min(max ?? Infinity, toNum(n)))
+
   const handleChange = (e) => setValue(clamp(e.target.value))
   const plus  = () => setValue(clamp(toNum(value) + step))
   const minus = () => setValue(clamp(toNum(value) - step))
+
   return (
     <div style={{ display:'grid', gap:6 }}>
-      <label style={{ fontSize:12, fontWeight:600 }}>{label}{units?` (${units})`:''}</label>
+      <label style={{ fontSize:12, fontWeight:600 }}>
+        {label}{units ? ` (${units})` : ''}
+      </label>
       <div style={{ display:'grid', gridTemplateColumns:'1fr auto auto', gap:6 }}>
         <input
           type="number"
@@ -53,4 +58,3 @@ function StepInput({ label, units, value, setValue, step=1, min=0, max }) {
           onFocus={(e)=> e.target.select()}
           style={{ width:'100%', padding:12, border:'1px solid #ddd', borderRadius:8, fontSize:16 }}
         />
-        <button type="button" onClick={minus} style={btnStep}>-</button>
